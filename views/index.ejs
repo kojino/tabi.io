@@ -506,7 +506,7 @@
         if (features.length) {
           var clickedPoint = features[0];
           // 1. Fly to the point
-          flyToStore(clickedPoint);
+          flyToStore(clickedPoint.geometry.coordinates);
           // 2. Close all other popups and display popup for clicked store
           createPopUp(clickedPoint);
           // 3. Highlight listing in sidebar (and remove highlight for all other listings)
@@ -528,10 +528,10 @@
         }
       });
 
-      function flyToStore(currentFeature) {
+      function flyToStore(coordinates) {
         map.flyTo({
-          center: currentFeature.geometry.coordinates,
-          zoom: 15
+          center: coordinates, // [longitude, latitude]
+          zoom: 9
         });
       }
 
@@ -546,9 +546,83 @@
             '<h4>' + currentFeature.properties.address + '</h4>')
           .addTo(map);
       }
+
+      // var request = require('request'); // Call before making GET requests
+      var geo = navigator.geolocation // Set up location services
+
+      function nearestAirport(latitude, longitude) {
+        var closestAirport = {
+          'city' : '',
+          'lat' : '',
+          'long' : '',
+          'airport' : '',
+          'airportName' : ''
+        };
+        request('http://api.sandbox.amadeus.com/v1.2/airports/nearest-relevant?latitude=' + latitude + '&longitude=' + longitude + '&apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            // console.log(JSON.parse(body)[0])
+
+            closestAirport.airport = JSON.parse(body)[0].airport;
+            closestAirport.airportName = JSON.parse(body)[0].airport_name;
+            closestAirport.city = JSON.parse(body)[0].city_name;
+            closestAirport.lat = JSON.parse(body)[0].location.latitude;
+            closestAirport.long = JSON.parse(body)[0].location.longitude;
+
+            // console.log(closestAirport)
+
+            return closestAirport
+          }
+        })
+      }
+
+      function getDestinations(airport, departureDate, duration, maxPrice) {
+        request('http://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?origin=' + airport + '&departure_date=' + departureDate + '&duration=' + duration + '&max_price=' + maxPrice + '&apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            var cities = [];
+            for (i = 0; i < 20; i++) {
+              cities.push(JSON.parse(body).results[i].destination)
+            }
+            // console.log(cities)
+
+            return cities
+          }
+        })
+      }
+
+      function getCoordinates(airport) {
+        var destinationInfo = {
+          'city' : "",
+          'lat' : "",
+          'long' : "",
+          'airport' : ""
+        };
+
+        request('http://api.sandbox.amadeus.com/v1.2/location/' + airport + '/?apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            // console.log(JSON.parse(body))
+            // console.log(JSON.parse(body).city.name)
+            // console.log(JSON.parse(body).airports[0].name)
+            // console.log(JSON.parse(body).city.location.latitude)
+            // console.log(JSON.parse(body).city.location.longitude)
+
+            destinationInfo.city = JSON.parse(body).city.name;
+            destinationInfo.lat = JSON.parse(body).city.location.latitude;
+            destinationInfo.long = JSON.parse(body).city.location.longitude;
+            destinationInfo.airport = JSON.parse(body).airports[0].name;
+
+            console.log(destinationInfo)
+
+            return destinationInfo;
+          }
+        })
+      }
+
+      geo.getCurrentPosition(function(position) {
+        flyToStore([position.coords.longitude, position.coords.latitude]);
+      });
+
       buildLocationList(stores);
-      flyToStore(features);
-      createPopUp(features);
+
     </script>
   </body>
 </html>
