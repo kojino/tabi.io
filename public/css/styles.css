@@ -1,2 +1,64 @@
-body    { padding-top:50px; }
-.container .jumbotron    { border-radius:40px; }
+#header {
+ z-index: 1 !important;   
+}
+.navbar.transparent.navbar-inverse .navbar-inner {
+   background: rgba(0,0,0,0.4) !important;
+   z-index: 0 !important;
+   
+}
+
+.navbar-brand {
+    position: absolute;
+    color: white;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+}
+
+#transparent-well {
+   background-color: rgba(245, 245, 245, 0.4) !important;
+   z-index: 1 !important;
+   color: white;
+}
+#prompt {
+    font-size: 12pt;
+}
+
+#datepicker {
+    color: black;
+}
+#about {
+    position: absolute;
+    right: 10%;
+    color: white;
+    font-size: 8pt; 
+}
+
+#about:hover {
+    text-decoration: underline;
+}
+
+#help {
+    position: absolute;
+    right: 20%;
+    color: white;
+    font-size: 8pt; 
+}
+
+#help:hover {
+    text-decoration: underline;
+}
+
+body { 
+    margin:0; 
+    padding:0; 
+} 
+#map {
+     position:absolute; 
+     top:0; 
+     bottom:0; 
+     width:100%; 
+     z-index: -100 !important;
+}

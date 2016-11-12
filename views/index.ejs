@@ -16,240 +16,11 @@
       });
     </script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="/styles.css">
 
-    <style>
-      body {
-        color: #404040;
-        font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-        margin: 0;
-        padding: 0;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-
-      h1 {
-        font-size: 22px;
-        margin: 0;
-        font-weight: 400;
-        line-height: 20px;
-        padding: 20px 2px;
-      }
-
-      a {
-        color: #404040;
-        text-decoration: none;
-      }
-
-      a:hover {
-        color: #101010;
-      }
-
-      .sidebar {
-        /*background-color: #19191a;*/
-        position: absolute;
-        width: 25%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        overflow: hidden;
-        border-right: 1px solid rgba(0, 0, 0, 0.25);
-      }
-
-      .pad2 {
-        /*padding: 20px;*/
-      }
-
-      .map {
-        position: absolute;
-        left: 0;
-        width: 100%;
-        top: 0;
-        bottom: 0;
-      }
-
-      .heading {
-        background: #fff;
-        border-bottom: 1px solid #eee;
-        height: 60px;
-        line-height: 60px;
-        padding: 0 10px;
-      }
-
-      .listings {
-        height: 100%;
-        overflow: auto;
-        padding-bottom: 60px;
-      }
-
-      .listings .item {
-        display: block;
-        border-bottom: 1px solid #eee;
-        padding: 10px;
-        text-decoration: none;
-      }
-
-      .listings .item:last-child { border-bottom: none; }
-
-      .listings .item .title {
-        display: block;
-        color: #00853e;
-        font-weight: 700;
-      }
-
-      .listings .item .title small { font-weight: 400; }
-
-      .listings .item.active .title,
-      .listings .item .title:hover { color: #8cc63f; }
-
-      .listings .item.active {
-        background-color: #f8f8f8;
-      }
-
-      ::-webkit-scrollbar {
-        width: 3px;
-        height: 3px;
-        border-left: 0;
-        background: rgba(0, 0, 0, 0.1);
-      }
-
-      ::-webkit-scrollbar-track {
-        background: none;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #00853e;
-        border-radius: 0;
-      }
-
-      .clearfix { display: block; }
-
-      .clearfix::after {
-        content: '.';
-        display: block;
-        height: 0;
-        clear: both;
-        visibility: hidden;
-      }
-
-      /* Marker tweaks */
-      .mapboxgl-popup-close-button {
-        display: none;
-      }
-
-      .mapboxgl-popup-content {
-        font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-        padding: 0;
-        width: 180px;
-      }
-
-      .mapboxgl-popup-content-wrapper {
-        padding: 1%;
-      }
-
-      .mapboxgl-popup-content h3 {
-        background: #91c949;
-        color: #fff;
-        margin: 0;
-        display: block;
-        padding: 10px;
-        border-radius: 3px 3px 0 0;
-        font-weight: 700;
-        margin-top: -15px;
-      }
-
-      .mapboxgl-popup-content h4 {
-        margin: 0;
-        display: block;
-        padding: 10px;
-        font-weight: 400;
-      }
-
-      .mapboxgl-popup-content div {
-        padding: 10px;
-      }
-
-      .mapboxgl-container .leaflet-marker-icon {
-        cursor: pointer;
-      }
-
-      .mapboxgl-popup-anchor-top > .mapboxgl-popup-content {
-        margin-top: 15px;
-      }
-
-      .mapboxgl-popup-anchor-top > .mapboxgl-popup-tip {
-        border-bottom-color: #91c949;
-      }
-      #header {
-       z-index: 1 !important;
-      }
-      .navbar.transparent.navbar-inverse .navbar-inner {
-         background: rgba(0,0,0,0.4) !important;
-         z-index: 0 !important;
-
-      }
-
-      .navbar-brand {
-          position: absolute;
-          color: white;
-          width: 100%;
-          left: 0;
-          top: 0;
-          text-align: center;
-          margin: auto;
-      }
-
-      #transparent-well {
-         background-color: rgba(245, 245, 245, 0.4) !important;
-         z-index: 1 !important;
-         color: white;
-      }
-      #prompt {
-          font-size: 12pt;
-      }
-
-      #datepicker {
-          color: black;
-      }
-      #about {
-          position: absolute;
-          right: 10%;
-          color: white;
-          font-size: 8pt;
-      }
-
-      #about:hover {
-          text-decoration: underline;
-      }
-
-      #help {
-          position: absolute;
-          right: 20%;
-          color: white;
-          font-size: 8pt;
-      }
-
-      #help:hover {
-          text-decoration: underline;
-      }
-
-      body {
-          margin:0;
-          padding:0;
-      }
-      #map {
-           position:absolute;
-           top:0;
-           bottom:0;
-           width:100%;
-           z-index: -100 !important;
-      }
-    </style>
+    
+    
+    <!-- <link rel='stylesheet' href='/style.css' />` -->
   </head>
   <body>
     <!-- <div id="sidebar pad2"> </div> -->
@@ -259,6 +30,19 @@
       </div>
       <div id='listings' class='listings'></div>
     </div> -->
+    <nav id="header" class="navbar navbar-">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">tabi</a>
+     <!--  <img alt="Brand" src="http://freevector.co/wp-content/uploads/2012/02/52116-paper-airplane-symbol.png"> -->
+    </div>
+</nav>
 
     <div class="col-xs-3">
 
