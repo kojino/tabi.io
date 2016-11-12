@@ -1,0 +1,29 @@
+{
+  "name": "tabi",
+  "version": "1.0.0",
+  "description": "find your travel destination more intuitively",
+  "main": "app.js",
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kojino/tabi.io.git"
+  },
+  "keywords": [
+    "travel"
+  ],
+  "author": "Kojin, David, Sam",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kojino/tabi.io/issues"
+  },
+  "homepage": "https://github.com/kojino/tabi.io#readme",
+  "engines": {
+    "node": "4.1.1"
+  }
+}
