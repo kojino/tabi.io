@@ -3,7 +3,7 @@
   "description": "Find travel destination in the easiest way.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "dependencies": {
     "ejs": "~1.0.0",
