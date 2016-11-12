@@ -1,23 +1,8 @@
 <!doctype html>
 <html>
     <head>
-    <body> 
-    <meta charset='utf-8' />
-    <title></title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.js'></script>
-    <script>
-      $(document).ready(function() {
-      $("#datepicker").datepicker();
-      });
-    </script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.css' rel='stylesheet' />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css">
- 
+    <body>
+
 </head>
 <body>
 <nav id="header" class="navbar navbar-">
@@ -33,6 +18,8 @@
      <!--  <img alt="Brand" src="http://freevector.co/wp-content/uploads/2012/02/52116-paper-airplane-symbol.png"> -->
     </div>
 </nav>
+
+
 <div class="col-xs-3">
 
   <div id = "transparent-well" class="well well-lg">
@@ -50,7 +37,7 @@
         <option>SJC</option>
         <option>PIT</option>
         <option>NYC</option>
-      </select> 
+      </select>
 
     <br>
 
@@ -62,7 +49,7 @@
 
     <label for="duration">duration (in days): </label>
       <input class="form-control" type="number" value="1" id="duration">
-    
+
     <br>
 
      <label for="budget">total budget(in dollars):</label>
@@ -77,7 +64,7 @@
     <br>
 
     <button type="submit" class="btn btn-default">submit</button>
-    
+
     <br>
 
      <a id="about" href="#">about</a>
@@ -85,20 +72,26 @@
   </div>
  </div>
 </div>
+
+
+
+
+
+
 <div id='map'>
 </div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aWRrYy0iLCJhIjoiY2l2MGhsM2Q5MDVqYzJvcGQ5ODMzemZxaiJ9.sdo-IMgy5aHNUoqD_-C_Ww';
 var map = new mapboxgl.Map({
     container: 'map', // container id
-    style: 'mapbox://styles/davidkc-/civezf9mr000m2juz3el3dr2p', 
+    style: 'mapbox://styles/davidkc-/civezf9mr000m2juz3el3dr2p',
     //stylesheet location
     center: [-97, 40], // starting position
     zoom: 3.5 // starting zoom
 });
 </script>
-      
 
-     
+
+
     </body>
 </html>
