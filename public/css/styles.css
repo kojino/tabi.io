@@ -1,10 +1,10 @@
 #header {
- z-index: 1 !important;   
+ z-index: 1 !important;
 }
 .navbar.transparent.navbar-inverse .navbar-inner {
    background: rgba(0,0,0,0.4) !important;
    z-index: 0 !important;
-   
+
 }
 
 .navbar-brand {
@@ -16,11 +16,14 @@
     text-align: center;
     margin: auto;
 }
-
+.col-xs-3 {
+  width: 18%;
+}
 #transparent-well {
    background-color: rgba(245, 245, 245, 0.4) !important;
    z-index: 1 !important;
    color: white;
+   height: 600px;
 }
 #prompt {
     font-size: 12pt;
@@ -31,9 +34,9 @@
 }
 #about {
     position: absolute;
-    right: 10%;
+    right: 20%;
     color: white;
-    font-size: 8pt; 
+    font-size: 8pt;
 }
 
 #about:hover {
@@ -42,23 +45,39 @@
 
 #help {
     position: absolute;
-    right: 20%;
+    right: 8%;
     color: white;
-    font-size: 8pt; 
+    font-size: 8pt;
 }
 
 #help:hover {
     text-decoration: underline;
 }
 
-body { 
-    margin:0; 
-    padding:0; 
-} 
+body {
+    margin:0;
+    padding:0;
+}
 #map {
-     position:absolute; 
-     top:0; 
-     bottom:0; 
-     width:100%; 
+     position:absolute;
+     top:0;
+     bottom:0;
+     width:100%;
      z-index: -100 !important;
+}
+
+.form-group a {
+  bottom: 20px;
+  padding: 10px;
+  margin: 5px;
+  font-size: 0;
+}
+
+.well well-lg {
+  position: relative;
+  height: 75%;
+}
+
+select[multiple] {
+  height: 65px;
 }
