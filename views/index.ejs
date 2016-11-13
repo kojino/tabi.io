@@ -112,6 +112,7 @@
     geo.getCurrentPosition(function(position) {
       flyToStore([position.coords.longitude, position.coords.latitude]);
     });
+
     var stores = {
       "type": "FeatureCollection",
       "features": [
@@ -147,16 +148,9 @@
       return Math.floor(Math.random() * (max - min)) + min;
     }
 
-    function wait(ms) {
-      var start = new Date().getTime();
-      var end = start;
-      while(end < start + ms) {
-        end = new Date().getTime();
-      }
-    }
-
     function createMarker(coordinate, id) {
       stores.features[0].geometry.coordinates = coordinate;
+      console.log(id)
       layers.push(id)
       map.addSource(id, {
         type: 'geojson',
@@ -170,54 +164,6 @@
           'icon-image': 'airport-15',
           'icon-allow-overlap': true
         }
-      });
-    }
-
-    // Add an event listener for when a user clicks on the map
-    map.on('click', function(e) {
-        // Query all the rendered points in the view
-        var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
-        if (features.length) {
-          var clickedPoint = features[0];
-          // 1. Fly to the point
-          flyToStore(clickedPoint.geometry.coordinates);
-          // 2. Close all other popups and display popup for clicked store
-          createPopUp(clickedPoint);
-          // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-          var activeItem = document.getElementsByClassName('active');
-          if (activeItem[0]) {
-            activeItem[0].classList.remove('active');
-          }
-          // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
-          var selectedFeature = clickedPoint.properties.address;
-          for (var i = 0; i < stores.features.length; i++) {
-            if (stores.features[i].properties.address === selectedFeature) {
-              selectedFeatureIndex = i;
-            }
-          }
-          // Select the correct list item using the found index and add the active class
-          var listing = document.getElementById('listing-' + selectedFeatureIndex);
-          listing.classList.add('active');
-        }
-      });
-
-    function createPopUp(currentFeature) {
-      var popUps = document.getElementsByClassName('mapboxgl-popup');
-      // Check if there is already a popup on the map and if so, remove it
-      if (popUps[0]) popUps[0].remove();
-
-      var popup = new mapboxgl.Popup({ closeOnClick: false })
-        .setLngLat(currentFeature.geometry.coordinates)
-        .setHTML('<h3>Sweetgreen</h3>' +
-          '<h4>' + currentFeature.properties.address + '</h4>')
-        .addTo(map);
-    }
-
-    function flyToStore(coordinates) {
-      map.flyTo({
-        center: coordinates, // [longitude, latitude]
-        zoom: 9,
-        speed: 0.9
       });
     }
 
@@ -262,6 +208,58 @@
           console.error('whoops: ' + error);
           callback(error)
         }
+      });
+    }
+
+    // Add an event listener for when a user clicks on the map
+    map.on('click', function(e) {
+        // Query all the rendered points in the view
+        var features = map.queryRenderedFeatures(e.point, { layers: layers });
+        if (features.length) {
+          var clickedPoint = features[0];
+          airportTitle = nearestAirport(clickedPoint.geometry.coordinates[1], clickedPoint.geometry.coordinates[0], 1, function(data) {
+            console.log(data[0].airportName)
+            createPopUp(clickedPoint, data[0].airportName)
+          })
+          // 1. Fly to the point
+          flyToStore(clickedPoint.geometry.coordinates);
+          // 2. Close all other popups and display popup for clicked store
+          // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+          var activeItem = document.getElementsByClassName('active');
+          if (activeItem[0]) {
+            activeItem[0].classList.remove('active');
+          }
+          // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
+          var selectedFeature = clickedPoint.properties.address;
+          for (var i = 0; i < stores.features.length; i++) {
+            if (stores.features[i].properties.address === selectedFeature) {
+              selectedFeatureIndex = i;
+            }
+          }
+          // Select the correct list item using the found index and add the active class
+          var listing = document.getElementById('listing-' + selectedFeatureIndex);
+          listing.classList.add('active');
+        }
+      });
+
+    function createPopUp(currentFeature, airport) {
+      var popUps = document.getElementsByClassName('mapboxgl-popup');
+      // Check if there is already a popup on the map and if so, remove it
+      if (popUps[0]) popUps[0].remove();
+
+      var popup = new mapboxgl.Popup({ closeOnClick: false })
+        .setLngLat(currentFeature.geometry.coordinates)
+        .setHTML('<h3>' + airport + '</h3>' +
+        '<a href="https://www.expedia.com/">' + 'Link to buy tickets' + '</a>'
+        )
+        .addTo(map);
+    }
+
+    function flyToStore(coordinates) {
+      map.flyTo({
+        center: coordinates, // [longitude, latitude]
+        zoom: 9,
+        speed: 0.9
       });
     }
 
@@ -310,8 +308,7 @@
               continue
             }
           }
-          wait(2000)
-          map.flyTo({zoom: 2, speed: .8})
+          map.flyTo({zoom: 2, speed: .6})
         },
         error: function (xhr, status, error) {
           console.error('whoops: ' + error);
@@ -389,7 +386,7 @@
     // createMarker()
     // getCoordinates("SFO")
     // getDestinations("SFO", "2016-12-19", "6", "1200")
-    // nearestAirport(37.857507, -122.318001)
+    // nearestAiport(37.857507, -122.318001)
     </script>
   </body>
 </html>
