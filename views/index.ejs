@@ -295,27 +295,41 @@
           apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
         },
         success: function (response) {
+          getCoordinates(document.getElementById('departing').value)
           // var cities = [];
           var random = 1;
+          var randomArray = []
+          console.log(response.results.length)
           for (i = 0; i < 20; i++) {
             // cities.push(response.results[i].destination)
-            random = getRandom(0, response.results.length)
+            random = checkValue(randomArray, response.results.length)
             try {
               getCoordinates(response.results[random].destination)
             }
-            catch(err) {
-              console.log("error: ")
-              console.log(err)
+            catch (err) {
+              continue
             }
           }
-          getCoordinates(document.getElementById('departing').value)
           wait(2000)
-          map.flyTo({zoom: 6, speed: .4})
+          map.flyTo({zoom: 2, speed: .8})
         },
         error: function (xhr, status, error) {
           console.error('whoops: ' + error);
         }
       });
+    }
+
+    function checkValue(array, top) {
+      random = getRandom(0, top)
+      for (i = 0; i < array.length; i++) {
+        if (random == array[i]) {
+           random = checkValue(array)
+          break
+        }
+      }
+      array.push(random)
+
+      return random
     }
 
     function getCoordinates(airport) {
