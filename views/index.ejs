@@ -17,10 +17,6 @@
     </script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.css' rel='stylesheet' />
     <link rel="stylesheet" type="text/css" href="/styles.css">
-
-    
-    
-    <!-- <link rel='stylesheet' href='/style.css' />` -->
   </head>
   <body>
     <!-- <div id="sidebar pad2"> </div> -->
@@ -56,11 +52,19 @@
 
         <label for="departing">departing from: </label>
           <select multiple class="form-control" id="departing">
-            <option>SFO</option>
-            <option>OAK</option>
-            <option>SJC</option>
-            <option>PIT</option>
-            <option>NYC</option>
+            <script>
+            var geo = navigator.geolocation;
+            geo.getCurrentPosition(function(position) {
+              nearestAirport(position.coords.latitude, position.coords.longitude, 3, function(data) {
+                $('#option1').text(data[0].airport)
+                $('#option2').text(data[1].airport)
+                $('#option3').text(data[2].airport)
+              })
+            });
+            </script>
+            <option id='option1'></option>
+            <option id='option2'></option>
+            <option id='option3'></option>
           </select>
 
         <br>
@@ -111,247 +115,247 @@
         }
       };
     }
-    var stores =
-      {
-        "type": "FeatureCollection",
-        "features": [
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.034084142948,
-                38.909671288923
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 234-7336",
-              "phone": "2022347336",
-              "address": "1471 P St NW",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "at 15th St NW",
-              "postalCode": "20005",
-              "state": "D.C."
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.049766,
-                38.900772
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 507-8357",
-              "phone": "2025078357",
-              "address": "2221 I St NW",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "at 22nd St NW",
-              "postalCode": "20037",
-              "state": "D.C."
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.043929,
-                38.910525
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 387-9338",
-              "phone": "2023879338",
-              "address": "1512 Connecticut Ave NW",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "at Dupont Circle",
-              "postalCode": "20036",
-              "state": "D.C."
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.0672,
-                38.90516896
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 337-9338",
-              "phone": "2023379338",
-              "address": "3333 M St NW",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "at 34th St NW",
-              "postalCode": "20007",
-              "state": "D.C."
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.002583742142,
-                38.887041080933
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 547-9338",
-              "phone": "2025479338",
-              "address": "221 Pennsylvania Ave SE",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "btwn 2nd & 3rd Sts. SE",
-              "postalCode": "20003",
-              "state": "D.C."
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -76.933492720127,
-                38.99225245786
-              ]
-            },
-            "properties": {
-              "address": "8204 Baltimore Ave",
-              "city": "College Park",
-              "country": "United States",
-              "postalCode": "20740",
-              "state": "MD"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.097083330154,
-                38.980979
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(301) 654-7336",
-              "phone": "3016547336",
-              "address": "4831 Bethesda Ave",
-              "cc": "US",
-              "city": "Bethesda",
-              "country": "United States",
-              "postalCode": "20814",
-              "state": "MD"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.359425054188,
-                38.958058116661
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(571) 203-0082",
-              "phone": "5712030082",
-              "address": "11935 Democracy Dr",
-              "city": "Reston",
-              "country": "United States",
-              "crossStreet": "btw Explorer & Library",
-              "postalCode": "20190",
-              "state": "VA"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.10853099823,
-                38.880100922392
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(703) 522-2016",
-              "phone": "7035222016",
-              "address": "4075 Wilson Blvd",
-              "city": "Arlington",
-              "country": "United States",
-              "crossStreet": "at N Randolph St.",
-              "postalCode": "22203",
-              "state": "VA"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -75.28784,
-                40.008008
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(610) 642-9400",
-              "phone": "6106429400",
-              "address": "68 Coulter Ave",
-              "city": "Ardmore",
-              "country": "United States",
-              "postalCode": "19003",
-              "state": "PA"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -75.20121216774,
-                39.954030175164
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(215) 386-1365",
-              "phone": "2153861365",
-              "address": "3925 Walnut St",
-              "city": "Philadelphia",
-              "country": "United States",
-              "postalCode": "19104",
-              "state": "PA"
-            }
-          },
-          {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [
-                -77.043959498405,
-                38.903883387232
-              ]
-            },
-            "properties": {
-              "phoneFormatted": "(202) 331-3355",
-              "phone": "2023313355",
-              "address": "1901 L St. NW",
-              "city": "Washington DC",
-              "country": "United States",
-              "crossStreet": "at 19th St",
-              "postalCode": "20036",
-              "state": "D.C."
-            }
-          }
-        ]
-      };
+    // var stores =
+    //   {
+    //     "type": "FeatureCollection",
+    //     "features": [
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.034084142948,
+    //             38.909671288923
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 234-7336",
+    //           "phone": "2022347336",
+    //           "address": "1471 P St NW",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "at 15th St NW",
+    //           "postalCode": "20005",
+    //           "state": "D.C."
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.049766,
+    //             38.900772
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 507-8357",
+    //           "phone": "2025078357",
+    //           "address": "2221 I St NW",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "at 22nd St NW",
+    //           "postalCode": "20037",
+    //           "state": "D.C."
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.043929,
+    //             38.910525
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 387-9338",
+    //           "phone": "2023879338",
+    //           "address": "1512 Connecticut Ave NW",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "at Dupont Circle",
+    //           "postalCode": "20036",
+    //           "state": "D.C."
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.0672,
+    //             38.90516896
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 337-9338",
+    //           "phone": "2023379338",
+    //           "address": "3333 M St NW",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "at 34th St NW",
+    //           "postalCode": "20007",
+    //           "state": "D.C."
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.002583742142,
+    //             38.887041080933
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 547-9338",
+    //           "phone": "2025479338",
+    //           "address": "221 Pennsylvania Ave SE",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "btwn 2nd & 3rd Sts. SE",
+    //           "postalCode": "20003",
+    //           "state": "D.C."
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -76.933492720127,
+    //             38.99225245786
+    //           ]
+    //         },
+    //         "properties": {
+    //           "address": "8204 Baltimore Ave",
+    //           "city": "College Park",
+    //           "country": "United States",
+    //           "postalCode": "20740",
+    //           "state": "MD"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.097083330154,
+    //             38.980979
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(301) 654-7336",
+    //           "phone": "3016547336",
+    //           "address": "4831 Bethesda Ave",
+    //           "cc": "US",
+    //           "city": "Bethesda",
+    //           "country": "United States",
+    //           "postalCode": "20814",
+    //           "state": "MD"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.359425054188,
+    //             38.958058116661
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(571) 203-0082",
+    //           "phone": "5712030082",
+    //           "address": "11935 Democracy Dr",
+    //           "city": "Reston",
+    //           "country": "United States",
+    //           "crossStreet": "btw Explorer & Library",
+    //           "postalCode": "20190",
+    //           "state": "VA"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.10853099823,
+    //             38.880100922392
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(703) 522-2016",
+    //           "phone": "7035222016",
+    //           "address": "4075 Wilson Blvd",
+    //           "city": "Arlington",
+    //           "country": "United States",
+    //           "crossStreet": "at N Randolph St.",
+    //           "postalCode": "22203",
+    //           "state": "VA"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -75.28784,
+    //             40.008008
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(610) 642-9400",
+    //           "phone": "6106429400",
+    //           "address": "68 Coulter Ave",
+    //           "city": "Ardmore",
+    //           "country": "United States",
+    //           "postalCode": "19003",
+    //           "state": "PA"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -75.20121216774,
+    //             39.954030175164
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(215) 386-1365",
+    //           "phone": "2153861365",
+    //           "address": "3925 Walnut St",
+    //           "city": "Philadelphia",
+    //           "country": "United States",
+    //           "postalCode": "19104",
+    //           "state": "PA"
+    //         }
+    //       },
+    //       {
+    //         "type": "Feature",
+    //         "geometry": {
+    //           "type": "Point",
+    //           "coordinates": [
+    //             -77.043959498405,
+    //             38.903883387232
+    //           ]
+    //         },
+    //         "properties": {
+    //           "phoneFormatted": "(202) 331-3355",
+    //           "phone": "2023313355",
+    //           "address": "1901 L St. NW",
+    //           "city": "Washington DC",
+    //           "country": "United States",
+    //           "crossStreet": "at 19th St",
+    //           "postalCode": "20036",
+    //           "state": "D.C."
+    //         }
+    //       }
+    //     ]
+    //   // };
     // function buildLocationList(data) {
     //   // Iterate through the list of stores
     //   for (i = 0; i < data.features.length; i++) {
@@ -458,46 +462,71 @@
         .addTo(map);
     }
 
-    // var request = require('request'); // Call before making GET requests
     var geo = navigator.geolocation // Set up location services
 
-    function nearestAirport(latitude, longitude) {
-      var closestAirport = {
+    function nearestAirport(latitude, longitude, numOfAirports, callback) {
+      var closestAirports = [{
         'city' : '',
         'lat' : '',
         'long' : '',
         'airport' : '',
         'airportName' : ''
-      };
-      request('http://api.sandbox.amadeus.com/v1.2/airports/nearest-relevant?latitude=' + latitude + '&longitude=' + longitude + '&apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          // console.log(JSON.parse(body)[0])
-
-          closestAirport.airport = JSON.parse(body)[0].airport;
-          closestAirport.airportName = JSON.parse(body)[0].airport_name;
-          closestAirport.city = JSON.parse(body)[0].city_name;
-          closestAirport.lat = JSON.parse(body)[0].location.latitude;
-          closestAirport.long = JSON.parse(body)[0].location.longitude;
-
-          // console.log(closestAirport)
-
-          return closestAirport
+      },
+      {
+        'city' : '',
+        'lat' : '',
+        'long' : '',
+        'airport' : '',
+        'airportName' : ''
+      },
+      {
+        'city' : '',
+        'lat' : '',
+        'long' : '',
+        'airport' : '',
+        'airportName' : ''
+      }];
+      $.ajax({
+        url: 'http://api.sandbox.amadeus.com/v1.2/airports/nearest-relevant?latitude=' + latitude + '&longitude=' + longitude,
+        data: {
+          apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
+        },
+        success: function (response) {
+          for (i = 0; i < numOfAirports; i++) {
+            closestAirports[i].airport = response[i].airport;
+            closestAirports[i].airportName = response[i].airport_name;
+            closestAirports[i].city = response[i].city_name;
+            closestAirports[i].lat = response[i].location.latitude;
+            closestAirports[i].long = response[i].location.longitude;
+          }
+          return callback(closestAirports)
+        },
+        error: function (xhr, status, error) {
+          console.error('whoops: ' + error);
+          callback(error)
         }
-      })
+      });
     }
 
     function getDestinations(airport, departureDate, duration, maxPrice) {
-      request('http://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?origin=' + airport + '&departure_date=' + departureDate + '&duration=' + duration + '&max_price=' + maxPrice + '&apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
+      $.ajax({
+        url: 'http://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?origin=' + airport + '&departure_date=' + departureDate + '&duration=' + duration + '&max_price=' + maxPrice,
+        data: {
+          apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
+        },
+        success: function (response) {
+          console.log('got the response');
           var cities = [];
           for (i = 0; i < 20; i++) {
-            cities.push(JSON.parse(body).results[i].destination)
+            cities.push(response.results[i].destination)
           }
-          // console.log(cities)
 
           return cities
+        },
+        error: function (xhr, status, error) {
+          console.error('whoops: ' + error);
         }
-      })
+      });
     }
 
     function getCoordinates(airport) {
@@ -508,24 +537,24 @@
         'airport' : ""
       };
 
-      request('http://api.sandbox.amadeus.com/v1.2/location/' + airport + '/?apikey=eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM', function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          // console.log(JSON.parse(body))
-          // console.log(JSON.parse(body).city.name)
-          // console.log(JSON.parse(body).airports[0].name)
-          // console.log(JSON.parse(body).city.location.latitude)
-          // console.log(JSON.parse(body).city.location.longitude)
+      $.ajax({
+        url: 'http://api.sandbox.amadeus.com/v1.2/location/' + airport,
+        data: {
+          apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
+        },
+        success: function (response) {
+          console.log('got the response');
+          destinationInfo.city = response.city.name;
+          destinationInfo.lat = response.city.location.latitude;
+          destinationInfo.long = response.city.location.longitude;
+          destinationInfo.airport = response.airports[0].name;
 
-          destinationInfo.city = JSON.parse(body).city.name;
-          destinationInfo.lat = JSON.parse(body).city.location.latitude;
-          destinationInfo.long = JSON.parse(body).city.location.longitude;
-          destinationInfo.airport = JSON.parse(body).airports[0].name;
-
-          console.log(destinationInfo)
-
-          return destinationInfo;
+          return destinationInfo
+        },
+        error: function (xhr, status, error) {
+          console.error('whoops: ' + error);
         }
-      })
+      });
     }
 
     geo.getCurrentPosition(function(position) {
@@ -533,8 +562,9 @@
     });
 
     // buildLocationList(stores);
-
-
+    // getCoordinates("SFO")
+    // getDestinations("SFO", "2016-12-19", "6", "1200")
+    // nearestAirport(37.857507, -122.318001)
     </script>
   </body>
 </html>
