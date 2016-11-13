@@ -3,7 +3,7 @@
   <head>
    <!--  <style type="text/css" src="style.css"></style> -->
     <meta charset='utf-8' />
-    <title></title>
+    <title>tabi.io</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.27.0/mapbox-gl.js'></script>
@@ -35,420 +35,170 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">tabi</a>
+      <a class="navbar-brand" href="#"></a>
      <!--  <img alt="Brand" src="http://freevector.co/wp-content/uploads/2012/02/52116-paper-airplane-symbol.png"> -->
     </div>
 </nav>
 
-    <div class="col-xs-3">
+  <div class="col-xs-3">
+    
+    <div id = "transparent-well" class="well well-lg">
+       <label id = "prompt">enter your travel: information: </label>
 
-      <div id = "transparent-well" class="well well-lg">
-         <label id = "prompt">enter your travel: information: </label>
+     <br>
+     <br>
 
-       <br>
-       <br>
+    <div class="form-group">
 
-      <div class="form-group">
+      <label for="departing">departing from: </label>
+        <select multiple class="form-control" id="departing">
+          <script>
+          var geo = navigator.geolocation;
+          geo.getCurrentPosition(function(position) {
+            nearestAirport(position.coords.latitude, position.coords.longitude, 3, function(data) {
+              $('#option1').text(data[0].airport)
+              $('#option2').text(data[1].airport)
+              $('#option3').text(data[2].airport)
+            })
+          });
+          </script>
+          <option id='option1'></option>
+          <option id='option2'></option>
+          <option id='option3'></option>
+        </select>
 
-        <label for="departing">departing from: </label>
-          <select multiple class="form-control" id="departing">
-            <script>
-            var geo = navigator.geolocation;
-            geo.getCurrentPosition(function(position) {
-              nearestAirport(position.coords.latitude, position.coords.longitude, 3, function(data) {
-                $('#option1').text(data[0].airport)
-                $('#option2').text(data[1].airport)
-                $('#option3').text(data[2].airport)
-              })
-            });
-            </script>
-            <option id='option1'></option>
-            <option id='option2'></option>
-            <option id='option3'></option>
-          </select>
+      <br>
 
-        <br>
+      <label for="datepicker">departure date: </label>
+        <input id="datepicker"/>
 
-        <label for="datepicker">departure date: </label>
-          <input id="datepicker"/>
+      <br>
+      <br>
 
-        <br>
-        <br>
+      <label for="duration">duration (in days): </label>
+        <input class="form-control" type="number" value="1" id="duration">
 
-        <label for="duration">duration (in days): </label>
-          <input class="form-control" type="number" value="1" id="duration">
+      <br>
 
-        <br>
-
-         <label for="budget">total budget(in dollars):</label>
-          <div class="input-group">
-            <div class="input-group-addon">$
-            </div>
-              <input type="text" class="form-control" id="budget" placeholder="Amount">
-            <div class="input-group-addon">.00
-            </div>
+       <label for="budget">total budget(in dollars):</label>
+        <div class="input-group">
+          <div class="input-group-addon">$
           </div>
+            <input type="text" class="form-control" id="budget" placeholder="Amount">
+          <div class="input-group-addon">.00
+          </div>
+        </div>
 
-        <br>
+      <br>
 
-        <button type="submit" class="btn btn-default">submit</button>
+      <button onclick="getCities()" type="submit" name="button" class="btn btn-default">submit</button>
 
-        <br>
+      <br>
 
-         <a id="about" href="#">about</a>
-         <a id="help" href="#">help</a>
-      </div>
-     </div>
+       <a id="about" href="#">about</a>
+       <a id="help" href="#">help</a>
     </div>
+   </div>
+  </div>
 
-    <div id='map' class='map pad2'>
-      <div id="header">
+  <div id='map' class='map pad2'>
+    <div id="header">
 
-      </div>
     </div>
-    <script>
-    // This will let you use the .remove() function later on
-    if (!('remove' in Element.prototype)) {
-      Element.prototype.remove = function() {
-        if (this.parentNode) {
-          this.parentNode.removeChild(this);
+  </div>
+  <script>
+    var geo = navigator.geolocation // Set up location services
+    geo.getCurrentPosition(function(position) {
+      flyToStore([position.coords.longitude, position.coords.latitude]);
+    });
+    var stores = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [-122.27274699999998, 37.8715926]
+          },
+          "properties": {
+            "address": "2094 12th Ave",
+            "city": "San Francisco",
+            "country": "United States",
+            "postalCode": "94116",
+            "state": "CA"
+          }
         }
-      };
+      ]
     }
-    // var stores =
-    //   {
-    //     "type": "FeatureCollection",
-    //     "features": [
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.034084142948,
-    //             38.909671288923
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 234-7336",
-    //           "phone": "2022347336",
-    //           "address": "1471 P St NW",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "at 15th St NW",
-    //           "postalCode": "20005",
-    //           "state": "D.C."
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.049766,
-    //             38.900772
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 507-8357",
-    //           "phone": "2025078357",
-    //           "address": "2221 I St NW",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "at 22nd St NW",
-    //           "postalCode": "20037",
-    //           "state": "D.C."
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.043929,
-    //             38.910525
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 387-9338",
-    //           "phone": "2023879338",
-    //           "address": "1512 Connecticut Ave NW",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "at Dupont Circle",
-    //           "postalCode": "20036",
-    //           "state": "D.C."
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.0672,
-    //             38.90516896
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 337-9338",
-    //           "phone": "2023379338",
-    //           "address": "3333 M St NW",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "at 34th St NW",
-    //           "postalCode": "20007",
-    //           "state": "D.C."
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.002583742142,
-    //             38.887041080933
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 547-9338",
-    //           "phone": "2025479338",
-    //           "address": "221 Pennsylvania Ave SE",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "btwn 2nd & 3rd Sts. SE",
-    //           "postalCode": "20003",
-    //           "state": "D.C."
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -76.933492720127,
-    //             38.99225245786
-    //           ]
-    //         },
-    //         "properties": {
-    //           "address": "8204 Baltimore Ave",
-    //           "city": "College Park",
-    //           "country": "United States",
-    //           "postalCode": "20740",
-    //           "state": "MD"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.097083330154,
-    //             38.980979
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(301) 654-7336",
-    //           "phone": "3016547336",
-    //           "address": "4831 Bethesda Ave",
-    //           "cc": "US",
-    //           "city": "Bethesda",
-    //           "country": "United States",
-    //           "postalCode": "20814",
-    //           "state": "MD"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.359425054188,
-    //             38.958058116661
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(571) 203-0082",
-    //           "phone": "5712030082",
-    //           "address": "11935 Democracy Dr",
-    //           "city": "Reston",
-    //           "country": "United States",
-    //           "crossStreet": "btw Explorer & Library",
-    //           "postalCode": "20190",
-    //           "state": "VA"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.10853099823,
-    //             38.880100922392
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(703) 522-2016",
-    //           "phone": "7035222016",
-    //           "address": "4075 Wilson Blvd",
-    //           "city": "Arlington",
-    //           "country": "United States",
-    //           "crossStreet": "at N Randolph St.",
-    //           "postalCode": "22203",
-    //           "state": "VA"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -75.28784,
-    //             40.008008
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(610) 642-9400",
-    //           "phone": "6106429400",
-    //           "address": "68 Coulter Ave",
-    //           "city": "Ardmore",
-    //           "country": "United States",
-    //           "postalCode": "19003",
-    //           "state": "PA"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -75.20121216774,
-    //             39.954030175164
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(215) 386-1365",
-    //           "phone": "2153861365",
-    //           "address": "3925 Walnut St",
-    //           "city": "Philadelphia",
-    //           "country": "United States",
-    //           "postalCode": "19104",
-    //           "state": "PA"
-    //         }
-    //       },
-    //       {
-    //         "type": "Feature",
-    //         "geometry": {
-    //           "type": "Point",
-    //           "coordinates": [
-    //             -77.043959498405,
-    //             38.903883387232
-    //           ]
-    //         },
-    //         "properties": {
-    //           "phoneFormatted": "(202) 331-3355",
-    //           "phone": "2023313355",
-    //           "address": "1901 L St. NW",
-    //           "city": "Washington DC",
-    //           "country": "United States",
-    //           "crossStreet": "at 19th St",
-    //           "postalCode": "20036",
-    //           "state": "D.C."
-    //         }
-    //       }
-    //     ]
-    //   // };
-    // function buildLocationList(data) {
-    //   // Iterate through the list of stores
-    //   for (i = 0; i < data.features.length; i++) {
-    //     var currentFeature = data.features[i];
-    //     // Shorten data.feature.properties to just `prop` so we're not
-    //     // writing this long form over and over again.
-    //     var prop = currentFeature.properties;
-    //     // Select the listing container in the HTML and append a div
-    //     // with the class 'item' for each store
-    //     var listings = document.getElementById('listings');
-    //     var listing = listings.appendChild(document.createElement('div'));
-    //     listing.className = 'item';
-    //     listing.id = 'listing-' + i;
-    //
-    //     // Create a new link with the class 'title' for each store
-    //     // and fill it with the store address
-    //     var link = listing.appendChild(document.createElement('a'));
-    //     link.href = '#';
-    //     link.className = 'title';
-    //     link.dataPosition = i;
-    //     link.innerHTML = prop.address;
-    //
-    //     // Create a new div with the class 'details' for each store
-    //     // and fill it with the city and phone number
-    //     var details = listing.appendChild(document.createElement('div'));
-    //     details.innerHTML = prop.city;
-    //     if (prop.phone) {
-    //       details.innerHTML += ' &middot; ' + prop.phoneFormatted;
-    //     }
-    //   }
-    // }
+    var layers = [];
 
     mapboxgl.accessToken = 'pk.eyJ1IjoiZGF2aWRrYy0iLCJhIjoiY2l2MGhsM2Q5MDVqYzJvcGQ5ODMzemZxaiJ9.sdo-IMgy5aHNUoqD_-C_Ww';
     var map = new mapboxgl.Map({
        container: 'map', // container id
        style: 'mapbox://styles/davidkc-/civezf9mr000m2juz3el3dr2p', //stylesheet location
        center: [-97, 40], // starting position
-       zoom: 3.5 // starting zoom
+       zoom: 1 // starting zoom
     });
-    map.on('load', function(e) {
-      // Add the stores data as a source
-      map.addSource('places', {
+
+    function getRandom(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function wait(ms) {
+      var start = new Date().getTime();
+      var end = start;
+      while(end < start + ms) {
+        end = new Date().getTime();
+      }
+    }
+
+    function createMarker(coordinate, id) {
+      stores.features[0].geometry.coordinates = coordinate;
+      layers.push(id)
+      map.addSource(id, {
         type: 'geojson',
         data: stores
       });
-
-      // Add a layer to the map with styling rules to render the source
       map.addLayer({
-        id: 'locations',
+        id: id,
         type: 'symbol',
-        source: 'places',
+        source: id,
         layout: {
-          'icon-image': 'restaurant-15',
+          'icon-image': 'airport-15',
           'icon-allow-overlap': true
         }
       });
-    });
+    }
 
     // Add an event listener for when a user clicks on the map
     map.on('click', function(e) {
-      // Query all the rendered points in the view
-      var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
-      if (features.length) {
-        var clickedPoint = features[0];
-        // 1. Fly to the point
-        flyToStore(clickedPoint.geometry.coordinates);
-        // 2. Close all other popups and display popup for clicked store
-        createPopUp(clickedPoint);
-        // 3. Highlight listing in sidebar (and remove highlight for all other listings)
-        var activeItem = document.getElementsByClassName('active');
-        if (activeItem[0]) {
-          activeItem[0].classList.remove('active');
-        }
-        // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
-        var selectedFeature = clickedPoint.properties.address;
-
-        for (var i = 0; i < stores.features.length; i++) {
-          if (stores.features[i].properties.address === selectedFeature) {
-            selectedFeatureIndex = i;
+        // Query all the rendered points in the view
+        var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
+        if (features.length) {
+          var clickedPoint = features[0];
+          // 1. Fly to the point
+          flyToStore(clickedPoint.geometry.coordinates);
+          // 2. Close all other popups and display popup for clicked store
+          createPopUp(clickedPoint);
+          // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+          var activeItem = document.getElementsByClassName('active');
+          if (activeItem[0]) {
+            activeItem[0].classList.remove('active');
           }
+          // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
+          var selectedFeature = clickedPoint.properties.address;
+          for (var i = 0; i < stores.features.length; i++) {
+            if (stores.features[i].properties.address === selectedFeature) {
+              selectedFeatureIndex = i;
+            }
+          }
+          // Select the correct list item using the found index and add the active class
+          var listing = document.getElementById('listing-' + selectedFeatureIndex);
+          listing.classList.add('active');
         }
-        // Select the correct list item using the found index and add the active class
-        var listing = document.getElementById('listing-' + selectedFeatureIndex);
-        listing.classList.add('active');
-      }
-    });
-
-    function flyToStore(coordinates) {
-      map.flyTo({
-        center: coordinates, // [longitude, latitude]
-        zoom: 9
       });
-    }
 
     function createPopUp(currentFeature) {
       var popUps = document.getElementsByClassName('mapboxgl-popup');
@@ -462,7 +212,13 @@
         .addTo(map);
     }
 
-    var geo = navigator.geolocation // Set up location services
+    function flyToStore(coordinates) {
+      map.flyTo({
+        center: coordinates, // [longitude, latitude]
+        zoom: 9,
+        speed: 0.9
+      });
+    }
 
     function nearestAirport(latitude, longitude, numOfAirports, callback) {
       var closestAirports = [{
@@ -508,6 +264,29 @@
       });
     }
 
+    function getCities(){ // Get cities from user parameters
+      if (layers.length > 0) {
+        while (layers.length > 0) {
+          try {
+            map.removeSource(layers[layers.length - 1])
+            map.removeLayer(layers[layers.length - 1])
+            layers.pop()
+          }
+          catch(err) {
+            console.log(err)
+          }
+        }
+        console.log(layers)
+      }
+      var rawDate = document.getElementById('datepicker').value;
+      rawDate = rawDate.split('/')
+      var date = rawDate[2] + '-' + rawDate[0] + '-' + rawDate[1];
+      getDestinations(document.getElementById('departing').value,
+                               date,
+                               document.getElementById('duration').value,
+                               document.getElementById('budget').value);
+    };
+
     function getDestinations(airport, departureDate, duration, maxPrice) {
       $.ajax({
         url: 'http://api.sandbox.amadeus.com/v1.2/flights/inspiration-search?origin=' + airport + '&departure_date=' + departureDate + '&duration=' + duration + '&max_price=' + maxPrice,
@@ -515,13 +294,22 @@
           apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
         },
         success: function (response) {
-          console.log('got the response');
-          var cities = [];
+          // var cities = [];
+          var random = 1;
           for (i = 0; i < 20; i++) {
-            cities.push(response.results[i].destination)
+            // cities.push(response.results[i].destination)
+            random = getRandom(0, response.results.length)
+            try {
+              getCoordinates(response.results[random].destination)
+            }
+            catch(err) {
+              console.log("error: ")
+              console.log(err)
+            }
           }
-
-          return cities
+          getCoordinates(document.getElementById('departing').value)
+          wait(2000)
+          map.flyTo({zoom: 6, speed: .4})
         },
         error: function (xhr, status, error) {
           console.error('whoops: ' + error);
@@ -530,26 +318,18 @@
     }
 
     function getCoordinates(airport) {
-      var destinationInfo = {
-        'city' : "",
-        'lat' : "",
-        'long' : "",
-        'airport' : ""
-      };
-
       $.ajax({
         url: 'http://api.sandbox.amadeus.com/v1.2/location/' + airport,
         data: {
           apikey: 'eQ0LUMGXplEM91Ze7Jnis2iOl46bb2WM'
         },
         success: function (response) {
-          console.log('got the response');
-          destinationInfo.city = response.city.name;
-          destinationInfo.lat = response.city.location.latitude;
-          destinationInfo.long = response.city.location.longitude;
-          destinationInfo.airport = response.airports[0].name;
+          // destinationInfo.city = response.city.name;
+          // destinationInfo.lat = response.airports[0].location.latitude;
+          // destinationInfo.long = response.airports[0].location.longitude;
+          // destinationInfo.airport = response.airports[0].name;
 
-          return destinationInfo
+          createMarker([response.airports[0].location.longitude, response.airports[0].location.latitude], response.airports[0].name)
         },
         error: function (xhr, status, error) {
           console.error('whoops: ' + error);
@@ -557,11 +337,7 @@
       });
     }
 
-    geo.getCurrentPosition(function(position) {
-      flyToStore([position.coords.longitude, position.coords.latitude]);
-    });
-
-    // buildLocationList(stores);
+    // createMarker()
     // getCoordinates("SFO")
     // getDestinations("SFO", "2016-12-19", "6", "1200")
     // nearestAirport(37.857507, -122.318001)

@@ -17,11 +17,14 @@ app.get('/', function(req, res) {
     // ejs render automatically looks in the views folder
     res.render('index');
 });
+// When button is pressed
+app.post('/', function(req, res) {
+    console.log("hey hey")
+    res.render('index');
+});
 
 app.listen(port, function() {
     console.log('Our app is running on http://localhost:' + port);
-}); 
+});
 
 app.use(express.static(__dirname + '/public/css'));
-
-
